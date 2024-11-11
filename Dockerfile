@@ -35,6 +35,9 @@ RUN composer dump-autoload
 # Da permisos a la carpeta de almacenamiento
 RUN chown -R www-data:www-data /var/www/storage
 
+RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache
+
+
 # Expone el puerto 8080
 EXPOSE 8080
 
