@@ -1,17 +1,23 @@
-# Calculadora en Laravel
+# Calculator in Laravel with Docker
 
-Este es un proyecto simple de una **calculadora** realizada con **Laravel**. La aplicación permite al usuario ingresar dos números y seleccionar una operación aritmética básica (suma, resta, multiplicación o división). Luego, muestra el resultado en la misma página.
+This project is a simple calculator application built in Laravel and set up to run in a Docker container. The Docker image is configured to be pushed to Docker Hub, making it easy to deploy on any machine with Docker.
 
-## Características
+## Features
 
-- Operaciones disponibles: **Suma**, **Resta**, **Multiplicación**, **División**.
-- Calculadora sencilla que muestra el resultado en pantalla.
-- Desarrollado con **Laravel**.
+- Arithmetic operations: **Addition**, **Subtraction**, **Multiplication**, **Division**.
+- Deployable in **Docker** and available on **Docker Hub** for easy access.
+- Complete environment with **Laravel**, **PHP-FPM**, and optionally **MySQL** (using `docker-compose`).
 
-## Requisitos
+## Requirements
 
-Para ejecutar este proyecto en tu máquina local, asegúrate de tener lo siguiente instalado:
+- [Docker](https://docs.docker.com/get-docker/) (to build and run the image)
+- [Docker Compose](https://docs.docker.com/compose/) (optional, if using `docker-compose.yml`)
 
-- **PHP** >= 7.4
-- **Composer** (para gestionar dependencias de Laravel)
-- **Laravel** (instalado automáticamente al ejecutar el proyecto)
+## Setup and Execution
+
+### Option 1: Pull the image from Docker Hub
+
+1. **Run the following command** to pull the image from Docker Hub:
+
+   ```bash
+   docker pull your-username/calculator-laravel
