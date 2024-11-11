@@ -1,28 +1,35 @@
-# Usar una imagen base de PHP
-FROM php:8.1-fpm
+# Usa la imagen base de PHP 8.2 con FPM para compatibilidad con las dependencias
+FROM php:8.2-fpm
 
-# Instalar dependencias necesarias (extensiones de PHP)
-RUN apt-get update && apt-get install -y libpng-dev libjpeg-dev libfreetype6-dev libzip-dev unzip git && \
-    docker-php-ext-configure gd --with-freetype --with-jpeg && \
-    docker-php-ext-install gd zip pdo pdo_mysql
+# Instala dependencias necesarias para Laravel y otros paquetes PHP
+RUN apt-get update && apt-get install -y \
+    libpng-dev \
+    libjpeg-dev \
+    libfreetype6-dev \
+    libzip-dev \
+    unzip \
+    git \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install gd zip pdo pdo_mysql
 
-# Instalar Composer (gestor de dependencias de PHP)
+# Instala Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-# Establecer el directorio de trabajo dentro del contenedor
+# Establece el directorio de trabajo
 WORKDIR /var/www
 
-# Copiar el contenido del proyecto en el contenedor
+# Copia los archivos del proyecto al contenedor
 COPY . .
 
-# Instalar dependencias de Laravel
+# Instala las dependencias de PHP y Laravel con Composer
 RUN composer install
 
-# Dar permisos al almacenamiento y caché de Laravel
-RUN chmod -R 777 /var/www/storage /var/www/bootstrap/cache
+# Otorga permisos para el almacenamiento de Laravel y el cache
+RUN chown -R www-data:www-data /var/www \
+    && chmod -R 755 /var/www/storage
 
-# Exponer el puerto 9000
+# Exposición del puerto 9000 para PHP-FPM
 EXPOSE 9000
 
-# Iniciar el servidor FPM de PHP
+# Inicia el servicio PHP-FPM
 CMD ["php-fpm"]
